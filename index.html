@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ToDoList Vue</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div id="app" style="text-align: center" class="container">
+		<todo-list v-for="(todo,index) in todoList" v-bind:todo="todo" v-on:remove="removeTodo(index)" v-bind:key="todo.id">
+		</todo-list>
+		<input type="text" v-model="text"><button v-on:click="addTodo">add</button>
+	</div>
+	<script>
+		var app = new Vue({
+			el : '#app',
+			data : {
+				todoList : [],
+				text : "",
+				id : 0
+			},
+			methods : {
+				addTodo : function() {
+					this.todoList.push({content : this.text , id : this.id})
+					this.text = ""
+					this.id++
+				},
+				removeTodo : function(index) {
+					this.todoList.splice(index,1)
+				}
+			}
+		})
+
+		Vue.component('todo-list',{
+			props : ['todo'],
+			template : `
+				<span>{{todo.content}}<span>&nbsp;<button v-on:click="$emit('remove')">remove</button><br>
+			`
+		})
+	</script>
+</body>
+</html>

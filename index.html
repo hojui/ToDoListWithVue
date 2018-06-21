@@ -22,6 +22,7 @@
 			},
 			methods : {
 				addTodo : function() {
+					if (this.text == '') return
 					this.todoList.push({content : this.text , id : this.id})
 					this.text = ""
 					this.id++
